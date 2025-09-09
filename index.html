@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POPBENZAA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>POPBENZAA!</h1>
+        <p>คะแนน: <span id="score">0</span></p>
+
+        <img id="pop-image" src="imge/379.jpg" alt="Teacher">
+
+        <br><br>
+
+        <button id="reset-btn">รีเซ็ตคะแนน</button>
+
+        <div style="margin-top:15px;">
+            <label for="volume">🔉 ระดับเสียง:</label>
+            <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+        </div>
+    </div>
+
+    <audio id="pop-sound" src="audio/funny-sound-effect-for-quotjack-in-the-boxquot-sound-ver1-110923.mp3"></audio>
+
+<script>
+    const popImage = document.getElementById('pop-image');
+    const scoreDisplay = document.getElementById('score');
+    const resetBtn = document.getElementById('reset-btn');
+    const volumeControl = document.getElementById('volume');
+
+    const closedImg = 'imge/379.jpg'; 
+    const openImg = 'imge/382.jpg';  
+
+    let score = 0;
+    let currentVolume = 1;
+
+    volumeControl.addEventListener('input', (e) => {
+        currentVolume = parseFloat(e.target.value);
+    });
+
+    popImage.addEventListener('click', () => {
+        score++;
+        scoreDisplay.textContent = score;
+
+        popImage.src = openImg;
+        setTimeout(() => {
+            popImage.src = closedImg;
+        }, 150);
+
+        const popAudio = new Audio('audio/funny-sound-effect-for-quotjack-in-the-boxquot-sound-ver1-110923.mp3');
+        popAudio.volume = currentVolume; 
+        popAudio.currentTime = 0.3;
+        popAudio.play().catch(err => console.log("เล่นเสียงไม่ได้:", err));
+    });
+
+    resetBtn.addEventListener('click', () => {
+        score = 0;
+        scoreDisplay.textContent = score;
+    });
+</script>
+</body>
+</html>
